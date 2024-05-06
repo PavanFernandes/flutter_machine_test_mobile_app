@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_machine_test_mobile_app/pages/home_page.dart';
 import 'package:flutter_machine_test_mobile_app/pages/login.dart';
 import 'package:flutter_machine_test_mobile_app/pages/otp-verification.dart';
+import 'package:flutter_machine_test_mobile_app/pages/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,10 +21,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Login(),
+      home: const SplashScreen(),
       routes: {
         '/login': (context) => const Login(),
-        '/otp-verification' : (context) => const OTPVerification()
+        '/otp-verification' : (context) => OTPVerification(),
+        '/home' : (context) => HomePage()
       },
     );
   }

@@ -20,10 +20,21 @@ class _LoginState extends State<Login>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-                onPressed: () {},
-                child: const Text("Phone")
+            ToggleButtons(
+              isSelected: [true, false],
+              onPressed: (int index) {
+              },
+              selectedColor: Colors.white70,
+              fillColor: Colors.redAccent,
+              borderRadius: BorderRadius.circular(10),
+              borderWidth: 1,
+              borderColor: Colors.grey,
+              children: const [
+                Text("    Phone    "),
+                Text("    Email    "),
+              ],
             ),
+
             const SizedBox(height: 30,),
             const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,8 +57,19 @@ class _LoginState extends State<Login>{
             ),
             const SizedBox(height: 30,),
             ElevatedButton(
-                onPressed: (){Navigator.pushNamed(context, '/otp-verification');},
-                child: const Text("SEND CODE"))
+              onPressed: () {
+                Navigator.pushNamed(context, '/otp-verification');
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white, backgroundColor: Colors.blue, // text color
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text("SEND CODE"),
+            ),
+
           ],
         ),
       )
