@@ -154,15 +154,16 @@ class _SplashScreenState extends State<SplashScreen>{
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-                Icons.architecture_sharp,
-                size: 80,
-                color : Colors.white
-            ),
-            SizedBox(height: 20),
-            Text("Deals Dray", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
-            SizedBox(height: 5,),
+            SizedBox(height: 350,),
             CircularProgressIndicator(),
+            Spacer(),
+            SizedBox(
+                height: 100,
+                width: 100,
+                child: Image(image: AssetImage("assets/images/deals-dray-logo.png"))),
+            SizedBox(height: 5),
+            Text("Deals Dray", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white70),),
+            SizedBox(height: 40,),
           ],
         ),
       )

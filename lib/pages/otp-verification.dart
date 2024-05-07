@@ -12,6 +12,8 @@ class _OTPVerificationState extends State<OTPVerification> {
   late Timer _timer;
   int _start = 120;
 
+  int otpLength = 4;
+
   late List<TextEditingController> controllers;
   late FocusNode _lastNode;
 
@@ -64,7 +66,7 @@ class _OTPVerificationState extends State<OTPVerification> {
 
   void _validateOTP() {
     String otp = getEnteredOTP();
-    if (otp == '12345') {
+    if (otp == '1234') {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
       Navigator.pushReplacementNamed(context, '/register');
@@ -74,12 +76,12 @@ class _OTPVerificationState extends State<OTPVerification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(50, 45, 50, 10),
+        padding: const EdgeInsets.fromLTRB(50, 20, 50, 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 70,),
             const SizedBox(
                 height: 140,
                 width: 70,
@@ -91,37 +93,47 @@ class _OTPVerificationState extends State<OTPVerification> {
             const Text("OTP is sent to your mobile number"),
             const SizedBox(height: 7,),
             const Text("+91-9765232817", style: TextStyle(fontWeight: FontWeight.w700,)),
-            const SizedBox(height: 7,),
-            const Text("enter otp as 12345 to proceed!", style: TextStyle(fontWeight: FontWeight.w700, color: Colors.green, fontSize: 16)),
-            const SizedBox(height: 20,),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0, 7, 0, 25),
+              child: Text("If you don't receive an otp, enter 1234 to proceed!", style: TextStyle(fontWeight: FontWeight.w700, color: Colors.green, fontSize: 12)),
+            ),
             Form(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(
-                    5, (index) => SizedBox(
-                  height: 45,
-                  width: 40,
-                  child: TextField(
-                    controller: controllers[index],
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    onChanged: (value) {
-                      if (value.isNotEmpty && index < 4){
-                        FocusScope.of(context).nextFocus();
-                      }
-                      if (value.isEmpty && index > 0) {
-                        FocusScope.of(context).previousFocus();
-                      }
-                      if (index == 4 && value.isNotEmpty) {
-                        _validateOTP();
-                      }
-                    },
-                    focusNode: index == 4 ? _lastNode : null,
+                    otpLength, (index) => SizedBox(
+                  height: 48,
+                  width: 45,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.circular(10), // Add rounded corners
+                    ),
+                    child: TextField(
+                      controller: controllers[index],
+                      style: const TextStyle(fontSize: 15),
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      textAlign: TextAlign.center,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      onChanged: (value) {
+                        if (value.isNotEmpty && index < 4){
+                          FocusScope.of(context).nextFocus();
+                        }
+                        if (value.isEmpty && index > 0) {
+                          FocusScope.of(context).previousFocus();
+                        }
+                        if (index == otpLength-1 && value.isNotEmpty) {
+                          _validateOTP();
+                        }
+                      },
+                      focusNode: index == otpLength-1 ? _lastNode : null,
+                    ),
                   ),
                 )
                 ),
@@ -133,12 +145,12 @@ class _OTPVerificationState extends State<OTPVerification> {
               children: [
                 Text(
                   getTimerString(),
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.black87),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300, color: Colors.black87),
                 ),
                 TextButton(
                   onPressed: (){},
                   child: const Text("SEND AGAIN",
-                    style: TextStyle(decoration: TextDecoration.underline, fontSize: 16, color: Colors.black54, fontWeight: FontWeight.w500),),
+                    style: TextStyle(decoration: TextDecoration.underline, fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w500),),
                 ),
               ],
             )
